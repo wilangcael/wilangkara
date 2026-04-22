@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You 💌</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Crimson+Text:ital@0;1&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div class="floating-hearts" id="fh"></div>
+
+  <!-- Progress Dots -->
+  <div class="progress-dots">
+    <div class="dot active" id="d1"></div>
+    <div class="dot" id="d2"></div>
+    <div class="dot" id="d3"></div>
+    <div class="dot" id="d4"></div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 1 — Envelope
+  ══════════════════════════════════ -->
+  <div class="page active" id="page1">
+    <div class="envelope-wrap" onclick="openEnvelope()">
+      <div class="envelope-flap" id="envFlap"></div>
+      <div class="envelope-body">
+        <div class="env-sides">
+          <div class="env-l"></div>
+          <div class="env-r"></div>
+        </div>
+        <div class="env-bottom"></div>
+        <div class="wax-seal">🤍</div>
+      </div>
+      <p class="open-hint">✦ click to open ✦</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 2 — Heart Puzzle
+  ══════════════════════════════════ -->
+  <div class="page" id="page2">
+    <div class="postcard" style="max-width:600px;">
+      <div class="postcard-inner">
+
+        <div class="ribbon">
+          <span class="ribbon-bow">🎀</span>
+          <span class="ribbon-bow">🎀</span>
+        </div>
+
+        <div class="stamp-area">
+          <div class="stamp">💌</div>
+          <div class="postmark">WITH LOVE • 2026</div>
+        </div>
+
+        <div style="text-align:center; margin-top:18px; margin-bottom:10px;">
+          <div class="letter-title">A Secret Letter</div>
+          <div class="divider">
+            <div class="line"></div>
+            <span>♥</span>
+            <div class="line"></div>
+          </div>
+          <p class="puzzle-hint">Susun huruf-huruf di dalam hati ini ✨<br>temukan nama penerimanya & nama kamu!</p>
+        </div>
+
+        <div class="heart-puzzle-wrap">
+          <div class="puzzle-boards">
+
+            <!-- Board 1: Recipient -->
+            <div class="puzzle-board-container" id="board1-container">
+              <div class="puzzle-board-label">— untuk siapa? —</div>
+              <div class="heart-grid" id="heartGrid1"></div>
+              <div class="puzzle-status" id="status1" style="margin-top:6px;"></div>
+              <div class="letter-bank" id="bank1"></div>
+            </div>
+
+            <!-- Board 2: Sender -->
+            <div class="puzzle-board-container" id="board2-container">
+              <div class="puzzle-board-label">— dari siapa? —</div>
+              <div class="heart-grid" id="heartGrid2"></div>
+              <div class="puzzle-status" id="status2" style="margin-top:6px;"></div>
+              <div class="letter-bank" id="bank2"></div>
+            </div>
+
+          </div>
+
+          <div class="puzzle-continue">
+            <button class="btn-next" id="btnContinue" onclick="goToLetter()" style="display:none;">
+              Continue 💌
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 3 — The Letter
+  ══════════════════════════════════ -->
+  <div class="page" id="page3">
+    <div class="postcard" style="max-width:560px;">
+      <div class="postcard-inner">
+
+        <div class="ribbon">
+          <span class="ribbon-bow">🎀</span>
+          <span class="ribbon-bow">🎀</span>
+        </div>
+
+        <div class="stamp-area">
+          <div class="stamp">🕊️</div>
+          <div class="postmark">LOVE • ALWAYS</div>
+        </div>
+
+        <div class="letter-salutation" id="letterSalutation" style="margin-top:18px;">
+          My Love, ...
+        </div>
+
+        <div class="photo-frames">
+
+          <!-- Frame 1 -->
+          <div class="photo-frame" id="frame1" onclick="triggerUpload(1)">
+            <input type="file" id="fileInput1" accept="image/*" style="display:none" onchange="loadPhoto(1, this)">
+            <img id="photo1" src="" alt="" style="display:none;">
+            <div class="frame-placeholder" id="placeholder1">
+              <span class="frame-icon">📸</span>
+              <span class="frame-hint"><img src="Kenangan/william_date.jpeg" alt=""><br>photo</span>
+            </div>
+          </div>
+
+          <!-- Frame 2 -->
+          <div class="photo-frame" id="frame2" onclick="triggerUpload(2)">
+            <input type="file" id="fileInput2" accept="image/*" style="display:none" onchange="loadPhoto(2, this)">
+            <img id="photo2" src="" alt="" style="display:none;">
+            <div class="frame-placeholder" id="placeholder2">
+              <span class="frame-icon">🌸</span>
+              <span class="frame-hint"><img src="Kenangan/est_date.jpeg" alt=""><br>photo</span>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="letter-body" id="letterBody">
+          Ever since you came into my life, everything feels brighter and more meaningful —
+          your smile gives me peace, your voice brings me joy, and your presence makes every
+          moment feel complete. I carry you in my heart always, and no matter where life takes
+          us, my love for you will only grow stronger...
+        </p>
+
+        <div class="letter-sign" id="letterSign">— yours always, ...</div>
+
+        <div style="text-align:center; margin-top:22px;">
+          <button class="btn-next" onclick="goToConfession()">There's something I want to say...</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 4 — The Confession
+  ══════════════════════════════════ -->
+  <div class="page" id="page4">
+    <div class="postcard" style="max-width:560px;">
+      <div class="postcard-inner" style="text-align:center;">
+
+        <div class="ribbon">
+          <span class="ribbon-bow">🎀</span>
+          <span class="ribbon-bow">🎀</span>
+        </div>
+
+        <span class="big-heart">💖</span>
+        <div class="confession-title" id="confTitle">For You...</div>
+
+        <div class="divider">
+          <div class="line"></div>
+          <span>♥</span>
+          <div class="line"></div>
+        </div>
+
+        <p class="confession-q">
+          I've been keeping this feeling for so long...<br />
+          and now I finally have the courage to say —<br /><br />
+          <strong
+            id="confQ"
+            style="font-family:'Playfair Display',serif; color:var(--red-deep); font-size:1.25rem;"
+          >
+            Will you be the most special person in my life?
+          </strong>
+        </p>
+
+        <div class="btns">
+          <button class="btn btn-yes" onclick="sayYes()">Yes, of course!</button>
+          <button class="btn btn-no" id="noBtn" onclick="pressedNo()">No...</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       PAGE 5 — YES! 🎉
+  ══════════════════════════════════ -->
+  <div class="page" id="page5">
+    <div class="postcard" style="max-width:540px;">
+      <div class="postcard-inner" style="text-align:center;">
+
+        <div class="ribbon">
+          <span class="ribbon-bow">🎀</span>
+          <span class="ribbon-bow">🎀</span>
+        </div>
+
+        <div class="yes-title" id="yesTitle">You said YES!!</div>
+        <div class="yes-sub">my heart is so full right now !!!</div>
+
+        <div class="divider">
+          <div class="line"></div>
+          <span>♥</span>
+          <div class="line"></div>
+        </div>
+
+        <p class="yes-msg" id="yesMsg">
+          I promise I will always be there for you,<br />
+          cheering you on at every step,<br />
+          and loving you with everything I have. 💗<br /><br />
+          Thank you for accepting my feelings.<br />
+          You are the most precious person in my world. 🌹
+        </p>
+
+        <div style="margin-top:26px; display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div class="stamp" style="width:82px; height:94px; font-size:2.6rem;">🌹</div>
+          <div class="postmark">FOREVER • YOURS</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Cute Alert Popup -->
+  <div id="cuteAlert"></div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
