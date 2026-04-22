@@ -451,173 +451,60 @@ body {
   .env-bottom { border-left-width: 140px; border-right-width: 140px; }
   .confession-title, .yes-title { font-size: 2rem; }
 }
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    font-family: 'Georgia', serif;
-    background: linear-gradient(180deg, #fff0f5, #fffafc);
-    color: #5a3b47;
-    overflow-x: hidden;
-    line-height: 1.6;
-  }
-  .container {
-    width: min(92%, 900px);
-    margin: 0 auto;
-    padding: 20px 0 60px;
-  }
-  .hero,
-  .letter,
-  .question,
-  .answer {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    border-radius: 24px;
-    padding: 20px;
-    margin: 20px 0;
-    box-shadow: 0 8px 30px rgba(255, 182, 193, 0.2);
-  }
-  .hero {
-    text-align: center;
-    padding: 28px 20px;
-  }
-  h1 {
-    font-size: clamp(1.8rem, 5vw, 3rem);
-    margin-bottom: 10px;
-    color: #d46a92;
-  }
-  h2 {
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    margin-bottom: 12px;
-    color: #c85a84;
-    text-align: center;
-  }
-  p {
-    font-size: clamp(0.98rem, 2.8vw, 1.08rem);
-  }
-  .subtitle {
-    font-size: clamp(0.95rem, 2.6vw, 1.1rem);
-    opacity: 0.9;
-  }
-  .heart-game {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 20px;
-  }
-  .card {
-    background: #fff;
-    border: 2px solid #ffd6e3;
-    border-radius: 20px;
-    padding: 16px;
-    text-align: center;
-  }
-  .card label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #b84f78;
-  }
-  .card input {
+/* ============================================
+   RESPONSIVE DESIGN (Tablet & Mobile)
+============================================ */
+
+/* Layar Tablet & Laptop Kecil (max-width: 768px) */
+@media (max-width: 768px) {
+  .postcard-inner { padding: 30px 24px; }
+  .puzzle-boards { gap: 20px; flex-direction: column; align-items: center; }
+  .letter-body { font-size: 1rem; line-height: 1.8; }
+}
+
+/* Layar HP Standar (max-width: 520px) */
+@media (max-width: 520px) {
+  /* Skala amplop mengecil otomatis tanpa merusak bentuk */
+  :root { --env-scale: 0.85; }
+
+  .postcard-inner { padding: 24px 16px; }
+  .ribbon { gap: 40px; }
+
+  /* Menyesuaikan ukuran puzzle hati */
+  .heart-grid { grid-template-columns: repeat(7, 32px); grid-template-rows: repeat(6, 32px); gap: 2px; }
+  .hcell { width: 32px; height: 32px; font-size: .85rem; }
+  
+  /* Menyesuaikan ukuran huruf tebakan */
+  .letter-bank { gap: 6px; }
+  .letter-tile { width: 32px; height: 32px; font-size: .85rem; }
+
+  /* Menyesuaikan ukuran teks & tombol */
+  .confession-title, .yes-title { font-size: 2rem; }
+  .big-heart { font-size: 4.5rem; }
+  .btns { flex-direction: column; align-items: center; gap: 12px; }
+  .btn { width: 100%; max-width: 260px; padding: 12px 20px; font-size: 1rem; }
+  
+  .btn-next { 
+    font-size: 1.2rem; 
+    padding: 10px 24px; 
+    white-space: normal; /* Agar teks tombol panjang bisa turun ke bawah */
+    line-height: 1.3;
     width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #f0b6ca;
-    border-radius: 14px;
-    outline: none;
-    font-size: 1rem;
-    text-align: center;
   }
-  .card input:focus {
-    border-color: #d46a92;
-    box-shadow: 0 0 0 4px rgba(212, 106, 146, 0.12);
-  }
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 18px;
-  }
-  .photo-box {
-    background: #fff;
-    border-radius: 18px;
-    padding: 10px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    text-align: center;
-  }
-  .photo-box img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 14px;
-    object-fit: cover;
-  }
-  .btn {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 999px;
-    background: linear-gradient(90deg, #f48fb1, #ec7097);
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 8px 18px rgba(236, 112, 151, 0.25);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(236, 112, 151, 0.32);
-  }
-  .center {
-    text-align: center;
-  }
-  .love-text {
-    white-space: pre-line;
-    text-align: center;
-  }
-  @media (max-width: 768px) {
-    .container {
-      width: 94%;
-      padding: 14px 0 40px;
-    }
-    .hero,
-    .letter,
-    .question,
-    .answer {
-      padding: 16px;
-      border-radius: 20px;
-      margin: 14px 0;
-    }
-    .heart-game,
-    .photo-grid {
-      grid-template-columns: 1fr;
-    }
-    .btn {
-      width: 100%;
-      padding: 14px 18px;
-      font-size: 1rem;
-    }
-  }
-  @media (max-width: 480px) {
-    h1 {
-      font-size: 1.6rem;
-    }
-    h2 {
-      font-size: 1.2rem;
-    }
-    p {
-      font-size: 0.95rem;
-    }
-    .card input {
-      padding: 11px 12px;
-      font-size: 0.95rem;
-    }
-  }
-</style>
+
+  #cuteAlert { padding: 20px; font-size: 1rem; }
+}
+
+/* Layar HP Sangat Kecil / iPhone SE (max-width: 380px) */
+@media (max-width: 380px) {
+  :root { --env-scale: 0.7; } /* Amplop mengecil lagi */
+
+  .heart-grid { grid-template-columns: repeat(7, 28px); grid-template-rows: repeat(6, 28px); }
+  .hcell { width: 28px; height: 28px; font-size: .75rem; border-radius: 4px; }
+  .letter-tile { width: 28px; height: 28px; font-size: .75rem; }
+
+  .confession-title, .yes-title { font-size: 1.7rem; }
+  .yes-sub { font-size: 0.85rem; letter-spacing: 1px; }
+  .yes-msg { font-size: 0.95rem; }
+  .letter-salutation { font-size: 1.8rem; }
+}
