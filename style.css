@@ -543,3 +543,71 @@ body {
 @media (min-width: 1024px) {
   :root { --cell: 38px; }
 }
+/* ── Music Player ── */
+.music-player {
+  position: fixed;
+  bottom: 56px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(245, 240, 232, 0.93);
+  border: 2px solid var(--gold);
+  border-radius: 50px;
+  padding: 7px 14px 7px 12px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  white-space: nowrap;
+  transition: box-shadow .3s ease;
+}
+.music-player.playing {
+  box-shadow: 0 8px 30px rgba(122,26,26,0.5), 0 0 0 2px rgba(200,169,110,0.4);
+}
+.music-note-anim {
+  font-size: 1.1rem;
+  color: var(--red-mid);
+  animation: noteBounce 1.2s ease-in-out infinite;
+  line-height: 1;
+  width: 16px;
+  text-align: center;
+}
+.music-player:not(.playing) .music-note-anim {
+  animation-play-state: paused;
+  opacity: 0.4;
+}
+@keyframes noteBounce {
+  0%, 100% { transform: translateY(0) rotate(-10deg); }
+  50%       { transform: translateY(-5px) rotate(10deg); }
+}
+.music-info { display: flex; flex-direction: column; gap: 1px; }
+.music-title {
+  font-family: 'Playfair Display', serif;
+  font-size: .72rem; font-weight: 700;
+  color: var(--red-deep); letter-spacing: .5px;
+}
+.music-artist {
+  font-family: 'Crimson Text', serif;
+  font-size: .62rem; color: var(--red-mid);
+  font-style: italic; opacity: .8;
+}
+.music-toggle {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red-deep), var(--red-mid));
+  border: none; color: var(--gold-light);
+  font-size: .72rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 10px rgba(122,26,26,.4);
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink: 0;
+}
+.music-toggle:hover { transform: scale(1.15); }
+
+@media (max-width: 359px) {
+  .music-player { padding: 6px 10px; gap: 7px; bottom: 50px; }
+  .music-title  { font-size: .63rem; }
+  .music-artist { display: none; }
+  .music-toggle { width: 26px; height: 26px; }
+}

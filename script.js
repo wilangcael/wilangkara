@@ -355,10 +355,60 @@ function launchConfetti() {
 }
 
 // ============================================================
+//  MUSIC PLAYER
+// ============================================================
+let musicPlaying = false;
+let musicStarted = false;
+
+function playMusic() {
+  const audio = document.getElementById('bgMusic');
+  if (!audio) return;
+  audio.volume = 0.7;
+  const promise = audio.play();
+  if (promise !== undefined) {
+    promise.then(() => {
+      musicPlaying = true;
+      document.getElementById('musicIcon').textContent = '❚❚';
+      document.getElementById('musicPlayer').classList.add('playing');
+    }).catch(() => {
+      // autoplay blocked, user must press play manually
+    });
+  }
+}
+
+function pauseMusic() {
+  const audio = document.getElementById('bgMusic');
+  if (!audio) return;
+  audio.pause();
+  musicPlaying = false;
+  document.getElementById('musicIcon').textContent = '▶';
+  document.getElementById('musicPlayer').classList.remove('playing');
+}
+
+function toggleMusic() {
+  if (musicPlaying) {
+    pauseMusic();
+  } else {
+    musicStarted = true;
+    playMusic();
+  }
+}
+
+function startMusicOnFirstInteraction() {
+  if (musicStarted) return;
+  musicStarted = true;
+  playMusic();
+}
+
+// ============================================================
 //  INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   initFloatingHearts();
   initPuzzle('heartGrid1', 'status1', 'bank1', RECIPIENT_NAME);
   initPuzzle('heartGrid2', 'status2', 'bank2', SENDER_NAME);
+
+  // Mulai musik saat user pertama kali interaksi (klik/tap)
+  document.addEventListener('click',      startMusicOnFirstInteraction, { once: true });
+  document.addEventListener('touchstart', startMusicOnFirstInteraction, { once: true });
 });

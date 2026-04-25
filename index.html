@@ -131,7 +131,7 @@
             <img id="photo1" src="" alt="" style="display:none;">
             <div class="frame-placeholder" id="placeholder1">
               <span class="frame-icon">📸</span>
-              <span class="frame-hint"><img src="Kenangan/william_date.jpeg" alt=""><br>photo</span>
+              <span class="frame-hint"><img src="william_date.jpeg" alt=""><br>photo</span>
             </div>
           </div>
 
@@ -141,7 +141,7 @@
             <img id="photo2" src="" alt="" style="display:none;">
             <div class="frame-placeholder" id="placeholder2">
               <span class="frame-icon">🌸</span>
-              <span class="frame-hint"><img src="Kenangan/est_date.jpeg" alt=""><br>photo</span>
+              <span class="frame-hint"><img src="est_date.jpeg" alt=""><br>photo</span>
             </div>
           </div>
 
@@ -245,6 +245,27 @@
 
   <!-- Cute Alert Popup -->
   <div id="cuteAlert"></div>
+
+  <!-- ══════════════════════════════════
+       MUSIC PLAYER
+  ══════════════════════════════════ -->
+
+  <!-- HTML5 Audio: upload file "aku-milikmu.mp3" ke folder hosting yang sama -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="akumilikmu_dewa19.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Mini Player UI -->
+  <div class="music-player" id="musicPlayer">
+    <div class="music-note-anim" id="musicNoteAnim">♪</div>
+    <div class="music-info">
+      <div class="music-title">Aku Milikmu</div>
+      <div class="music-artist">Dewa 19</div>
+    </div>
+    <button class="music-toggle" id="musicToggle" onclick="toggleMusic()">
+      <span id="musicIcon">▶</span>
+    </button>
+  </div>
 
   <!-- JavaScript -->
   <script src="script.js"></script>
