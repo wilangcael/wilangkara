@@ -1,5 +1,6 @@
 /* ============================================
    style.css — For You 💌 Confession Website
+   Responsive: mobile / tablet / desktop
 ============================================ */
 
 /* ── CSS Variables ── */
@@ -12,9 +13,12 @@
   --gold-light: #e8d5a3;
   --text-dark:  #4a1a1a;
   --stamp-blue: #7aa8c8;
+  /* fluid cell size: clamps between 26px (tiny phone) and 38px (desktop) */
+  --cell: clamp(26px, 5.5vw, 38px);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
+html { font-size: 16px; }
 
 body {
   background-color: var(--red-deep);
@@ -52,18 +56,23 @@ body {
 .page {
   display: none; position: relative; z-index: 1;
   width: 100%; min-height: 100vh;
-  align-items: center; justify-content: center; padding: 20px;
+  align-items: center; justify-content: center;
+  padding: clamp(12px, 4vw, 24px);
+  padding-bottom: 60px;
 }
 .page.active { display: flex; }
 
 /* ── Postcard ── */
 .postcard {
   background: var(--cream); border-radius: 14px;
-  max-width: 680px; width: 100%; position: relative;
+  width: 100%; max-width: 680px; position: relative;
   animation: slideIn .8s cubic-bezier(.34,1.56,.64,1) forwards;
   box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 3px rgba(200,169,110,.3);
 }
-.postcard-inner { padding: 36px 40px; position: relative; }
+.postcard-inner {
+  padding: clamp(20px, 5vw, 36px) clamp(16px, 5vw, 40px);
+  position: relative;
+}
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(40px) rotate(-2deg); }
   to   { opacity: 1; transform: translateY(0)    rotate(0deg); }
@@ -73,24 +82,27 @@ body {
 .ribbon {
   position: absolute; top: -14px; left: 50%;
   transform: translateX(-50%);
-  display: flex; gap: 64px; pointer-events: none;
+  display: flex; gap: clamp(30px, 10vw, 64px); pointer-events: none;
 }
 .ribbon-bow {
-  font-size: 1.5rem; color: var(--stamp-blue);
+  font-size: clamp(1.1rem, 3vw, 1.5rem); color: var(--stamp-blue);
   filter: drop-shadow(0 2px 3px rgba(0,0,0,.25));
 }
 
 /* ── Stamp ── */
 .stamp-area {
-  position: absolute; top: 28px; right: 36px;
+  position: absolute;
+  top: clamp(14px, 3vw, 28px);
+  right: clamp(10px, 3vw, 36px);
   display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
 }
 .stamp {
-  width: 68px; height: 78px;
+  width: clamp(44px, 10vw, 68px);
+  height: clamp(50px, 11vw, 78px);
   border: 2px solid var(--stamp-blue);
   background: var(--cream-dark);
   display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; position: relative;
+  font-size: clamp(1.3rem, 4vw, 2rem); position: relative;
   box-shadow: 2px 2px 8px rgba(0,0,0,.15);
 }
 .stamp::before {
@@ -98,7 +110,7 @@ body {
   border: 1px dashed var(--stamp-blue); opacity: .5;
 }
 .postmark {
-  font-size: .55rem; color: var(--red-mid);
+  font-size: clamp(.42rem, 1.4vw, .55rem); color: var(--red-mid);
   font-family: 'Crimson Text', serif;
   letter-spacing: 1px; text-transform: uppercase; opacity: .7; text-align: center;
 }
@@ -112,11 +124,13 @@ body {
 .btn-next {
   background: linear-gradient(135deg, var(--red-deep), #5a0f0f);
   color: var(--gold-light);
-  font-family: 'Great Vibes', cursive; font-size: 1.45rem;
-  padding: 12px 42px; border: none; border-radius: 50px;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.1rem, 4vw, 1.45rem);
+  padding: clamp(10px, 2.5vw, 12px) clamp(22px, 6vw, 42px);
+  border: none; border-radius: 50px;
   cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.3);
   transition: all .3s cubic-bezier(.34,1.56,.64,1);
-  margin-top: 12px; letter-spacing: 1px;
+  margin-top: 12px; letter-spacing: 1px; white-space: nowrap;
 }
 .btn-next:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 10px 30px rgba(122,26,26,.5); }
 
@@ -128,37 +142,62 @@ body {
   animation: slideIn .8s cubic-bezier(.34,1.56,.64,1) forwards;
   cursor: pointer;
 }
+
+/* fluid envelope: half-width clamped */
 .envelope-flap {
-  width: 340px; height: 0;
-  border-left: 170px solid transparent;
-  border-right: 170px solid transparent;
-  border-bottom: 130px solid #c8a96e;
+  --eh: clamp(120px, 40vw, 170px);
+  width: calc(var(--eh) * 2); height: 0;
+  border-left: var(--eh) solid transparent;
+  border-right: var(--eh) solid transparent;
+  border-bottom: calc(var(--eh) * 0.76) solid #c8a96e;
   transition: transform .65s cubic-bezier(.34,1.56,.64,1);
   transform-origin: top center;
   filter: drop-shadow(0 -4px 8px rgba(0,0,0,.2));
 }
 .envelope-flap.open { transform: rotateX(180deg); }
+
 .envelope-body {
-  width: 340px; height: 220px;
+  --eh: clamp(120px, 40vw, 170px);
+  width: calc(var(--eh) * 2);
+  height: calc(var(--eh) * 1.29);
   background: var(--cream); border-radius: 0 0 16px 16px;
   position: relative; box-shadow: 0 20px 60px rgba(0,0,0,.4);
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
-.env-sides { width: 340px; display: flex; position: absolute; top: 0; }
-.env-l { width: 0; height: 0; border-left: 170px solid #dbc98a; border-bottom: 110px solid transparent; }
-.env-r { width: 0; height: 0; border-right: 170px solid #dbc98a; border-bottom: 110px solid transparent; }
-.env-bottom {
+
+.env-sides {
+  --eh: clamp(120px, 40vw, 170px);
+  width: calc(var(--eh) * 2);
+  display: flex; position: absolute; top: 0;
+}
+.env-l {
+  --eh: clamp(120px, 40vw, 170px);
   width: 0; height: 0;
-  border-left: 170px solid transparent; border-right: 170px solid transparent;
-  border-bottom: 130px solid #e8d5a3;
+  border-left: var(--eh) solid #dbc98a;
+  border-bottom: calc(var(--eh) * 0.65) solid transparent;
+}
+.env-r {
+  --eh: clamp(120px, 40vw, 170px);
+  width: 0; height: 0;
+  border-right: var(--eh) solid #dbc98a;
+  border-bottom: calc(var(--eh) * 0.65) solid transparent;
+}
+.env-bottom {
+  --eh: clamp(120px, 40vw, 170px);
+  width: 0; height: 0;
+  border-left: var(--eh) solid transparent;
+  border-right: var(--eh) solid transparent;
+  border-bottom: calc(var(--eh) * 0.76) solid #e8d5a3;
   position: absolute; bottom: 0;
 }
+
 .wax-seal {
-  width: 62px; height: 62px;
+  width: clamp(44px, 12vw, 62px);
+  height: clamp(44px, 12vw, 62px);
   background: radial-gradient(circle at 40% 35%, #c0392b, #7a1a1a);
   border-radius: 50%; z-index: 5;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3.5vw, 1.5rem);
   box-shadow: 0 4px 15px rgba(0,0,0,.4), inset 0 -3px 6px rgba(0,0,0,.2);
   animation: waxPulse 2s ease-in-out infinite;
 }
@@ -168,7 +207,7 @@ body {
 }
 .open-hint {
   color: var(--gold-light); font-family: 'Great Vibes', cursive;
-  font-size: 1.45rem; margin-top: 22px;
+  font-size: clamp(1.1rem, 4vw, 1.45rem); margin-top: 22px;
   animation: blink 2s ease-in-out infinite;
 }
 @keyframes blink { 0%, 100% { opacity: .9; } 50% { opacity: .35; } }
@@ -178,38 +217,45 @@ body {
 ============================================ */
 .letter-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.6rem; font-weight: 700; color: var(--red-deep);
-  letter-spacing: 2px; text-transform: uppercase; text-align: center;
+  font-size: clamp(1.05rem, 4vw, 1.6rem);
+  font-weight: 700; color: var(--red-deep);
+  letter-spacing: clamp(1px, 0.5vw, 2px);
+  text-transform: uppercase; text-align: center;
 }
 .puzzle-hint {
-  font-size: .95rem; color: var(--red-mid); text-align: center;
-  font-style: italic; margin-bottom: 6px;
+  font-size: clamp(.78rem, 2.5vw, .95rem); color: var(--red-mid);
+  text-align: center; font-style: italic; margin-bottom: 6px;
 }
 .heart-puzzle-wrap {
-  display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%;
 }
 .puzzle-boards {
-  display: flex; gap: 28px; flex-wrap: wrap; justify-content: center;
+  display: flex; gap: clamp(10px, 4vw, 28px);
+  flex-wrap: wrap; justify-content: center; width: 100%;
 }
 .puzzle-board-container {
   display: flex; flex-direction: column; align-items: center; gap: 8px;
+  flex: 1 1 auto; min-width: 0;
 }
 .puzzle-board-label {
-  font-family: 'Playfair Display', serif; font-size: .65rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.52rem, 1.6vw, .65rem);
   letter-spacing: 2px; text-transform: uppercase; color: var(--red-mid);
+  text-align: center;
 }
 
-/* Heart grid — 7×6, some cells ghost (outside heart shape) */
+/* Heart grid — fluid cells */
 .heart-grid {
   display: grid;
-  grid-template-columns: repeat(7, 38px);
-  grid-template-rows: repeat(6, 38px);
-  gap: 4px;
+  grid-template-columns: repeat(7, var(--cell));
+  grid-template-rows:    repeat(6, var(--cell));
+  gap: clamp(2px, 0.6vw, 4px);
 }
 .hcell {
-  width: 38px; height: 38px; border-radius: 6px;
+  width: var(--cell); height: var(--cell); border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-size: 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.65rem, 2vw, 1rem);
   font-weight: 700; color: var(--text-dark);
   cursor: pointer; user-select: none;
   transition: all .2s cubic-bezier(.34,1.56,.64,1);
@@ -236,9 +282,7 @@ body {
   color: #fff; border-color: #2d6a2d;
   animation: correctPop .35s cubic-bezier(.34,1.56,.64,1);
 }
-.hcell.active-cell.wrong {
-  animation: shake .35s ease;
-}
+.hcell.active-cell.wrong { animation: shake .35s ease; }
 @keyframes correctPop {
   0%   { transform: scale(1.3); }
   100% { transform: scale(1.12); }
@@ -250,16 +294,22 @@ body {
 }
 .hcell.ghost { background: transparent; border: none; cursor: default; pointer-events: none; }
 
-/* Letter bank tiles */
+/* Letter bank */
 .letter-bank {
-  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 290px;
+  display: flex; flex-wrap: wrap; gap: clamp(4px, 1.2vw, 6px);
+  justify-content: center;
+  max-width: calc(var(--cell) * 7 + clamp(2px, 0.6vw, 4px) * 6);
 }
 .letter-tile {
-  width: 36px; height: 36px; border-radius: 8px;
+  width: clamp(26px, 7.5vw, 36px);
+  height: clamp(26px, 7.5vw, 36px);
+  border-radius: 8px;
   background: var(--cream-dark); border: 2px solid var(--gold);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700;
-  color: var(--text-dark); cursor: pointer; user-select: none;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.7rem, 2.2vw, 1rem);
+  font-weight: 700; color: var(--text-dark);
+  cursor: pointer; user-select: none;
   transition: all .2s cubic-bezier(.34,1.56,.64,1);
   box-shadow: 2px 2px 4px rgba(0,0,0,.12);
 }
@@ -269,13 +319,14 @@ body {
   border-color: rgba(200,169,110,.3); cursor: default; transform: none;
 }
 .puzzle-status {
-  font-size: .9rem; color: var(--red-mid); font-style: italic; text-align: center; min-height: 22px;
+  font-size: clamp(.75rem, 2.5vw, .9rem); color: var(--red-mid);
+  font-style: italic; text-align: center; min-height: 22px;
 }
 .puzzle-solved-badge {
   display: inline-block;
   background: linear-gradient(135deg, #2d6a2d, #3a8a3a);
   color: #fff; border-radius: 20px; padding: 4px 16px;
-  font-size: .8rem; letter-spacing: 1px; font-style: normal;
+  font-size: clamp(.65rem, 2vw, .8rem); letter-spacing: 1px; font-style: normal;
   font-family: 'Playfair Display', serif; text-transform: uppercase;
 }
 .puzzle-continue { text-align: center; margin-top: 8px; }
@@ -284,12 +335,13 @@ body {
    PAGE 3 — THE LETTER
 ============================================ */
 .letter-salutation {
-  font-family: 'Great Vibes', cursive; font-size: 2.1rem;
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.4rem, 5vw, 2.1rem);
   color: var(--red-deep); margin-bottom: 14px; text-align: center;
 }
 .letter-body {
-  font-size: 1.05rem; line-height: 1.95; color: var(--text-dark);
-  text-align: justify; font-style: italic; margin-bottom: 20px;
+  font-size: clamp(.88rem, 2.8vw, 1.05rem); line-height: 1.9;
+  color: var(--text-dark); text-align: justify; font-style: italic; margin-bottom: 20px;
   background: repeating-linear-gradient(
     transparent, transparent 29px,
     rgba(200,169,110,.2) 29px, rgba(200,169,110,.2) 30px
@@ -298,49 +350,55 @@ body {
 }
 .letter-sign {
   text-align: right; font-family: 'Great Vibes', cursive;
-  font-size: 1.45rem; color: var(--red-mid);
+  font-size: clamp(1.1rem, 4vw, 1.45rem); color: var(--red-mid);
 }
-.photo-frames { display: flex; gap: 16px; justify-content: center; margin: 16px 0; }
+
+/* Photo frames */
+.photo-frames {
+  display: flex; gap: clamp(10px, 3vw, 16px);
+  justify-content: center; margin: 16px 0;
+  flex-wrap: wrap;
+}
 .photo-frame {
-  width: 100px; height: 112px; background: white;
+  width:  clamp(68px, 18vw, 100px);
+  height: clamp(78px, 20vw, 112px);
+  background: white;
   border: 3px solid rgba(200,169,110,.5);
   box-shadow: 3px 3px 10px rgba(0,0,0,.2), inset 0 0 0 1px rgba(200,169,110,.2);
   display: flex; align-items: center; justify-content: center;
   position: relative; overflow: hidden;
-  cursor: pointer;
+  cursor: pointer; flex-shrink: 0;
   transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
 }
 .photo-frame:first-child { transform: rotate(-4deg); }
 .photo-frame:last-child  { transform: rotate(4deg); }
 .photo-frame:first-child:hover { transform: rotate(-4deg) scale(1.07); box-shadow: 5px 5px 18px rgba(0,0,0,.28); }
 .photo-frame:last-child:hover  { transform: rotate(4deg)  scale(1.07); box-shadow: 5px 5px 18px rgba(0,0,0,.28); }
-
-/* White bottom strip (polaroid feel) */
 .photo-frame::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 20px; background: white; z-index: 2;
+  height: 18px; background: white; z-index: 2;
   box-shadow: 0 -1px 0 rgba(200,169,110,.2);
 }
-
-/* Uploaded photo fills the frame */
 .photo-frame img {
   position: absolute; top: 0; left: 0;
-  width: 100%; height: calc(100% - 20px);
+  width: 100%; height: calc(100% - 18px);
   object-fit: cover; object-position: center;
   display: block; z-index: 1;
 }
-
-/* Placeholder (icon + hint text) */
 .frame-placeholder {
   display: flex; flex-direction: column; align-items: center;
-  gap: 4px; z-index: 3; padding-bottom: 20px;
+  gap: 4px; z-index: 3; padding-bottom: 18px;
   transition: opacity .2s ease;
 }
-.frame-icon  { font-size: 1.8rem; line-height: 1; }
+.frame-icon  { font-size: clamp(1.2rem, 4vw, 1.8rem); line-height: 1; }
 .frame-hint  {
-  font-family: 'Crimson Text', serif; font-size: .6rem;
+  font-family: 'Crimson Text', serif; font-size: clamp(.48rem, 1.4vw, .6rem);
   color: rgba(122,26,26,.45); text-align: center; line-height: 1.3;
   letter-spacing: .5px;
+}
+.frame-hint img {
+  width: 100%; height: auto; display: block;
+  position: static !important; object-fit: cover;
 }
 .photo-frame:hover .frame-placeholder { opacity: .7; }
 
@@ -348,7 +406,7 @@ body {
    PAGE 4 — THE CONFESSION
 ============================================ */
 .big-heart {
-  font-size: 5.5rem; display: block;
+  font-size: clamp(3.5rem, 12vw, 5.5rem); display: block;
   animation: heartbeat 1.2s ease-in-out infinite; margin-bottom: 6px;
 }
 @keyframes heartbeat {
@@ -360,16 +418,18 @@ body {
 }
 .confession-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.4rem; color: var(--red-deep); margin-bottom: 4px;
+  font-size: clamp(1.6rem, 6vw, 2.4rem); color: var(--red-deep); margin-bottom: 4px;
 }
 .confession-q {
-  font-size: 1.15rem; color: var(--text-dark); margin: 18px 0 28px;
-  font-style: italic; line-height: 1.65;
+  font-size: clamp(.92rem, 3vw, 1.15rem); color: var(--text-dark);
+  margin: 18px 0 28px; font-style: italic; line-height: 1.65;
 }
 .btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 .btn {
-  font-family: 'Playfair Display', serif; font-size: 1.1rem;
-  padding: 14px 42px; border: none; border-radius: 50px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.88rem, 3vw, 1.1rem);
+  padding: clamp(10px, 2.5vw, 14px) clamp(22px, 6vw, 42px);
+  border: none; border-radius: 50px;
   cursor: pointer; font-weight: 700; letter-spacing: 1px;
   transition: all .3s cubic-bezier(.34,1.56,.64,1);
 }
@@ -385,20 +445,25 @@ body {
    PAGE 5 — YES!
 ============================================ */
 .yes-title {
-  font-family: 'Playfair Display', serif; font-size: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 7vw, 3rem);
   color: var(--red-deep); margin-bottom: 6px;
   animation: bounceIn .6s cubic-bezier(.34,1.56,.64,1);
 }
 @keyframes bounceIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .yes-sub {
-  font-family: 'Crimson Text', serif; font-size: 1rem;
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(.8rem, 2.5vw, 1rem);
   color: var(--red-mid); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px;
 }
-.yes-msg { font-size: 1.1rem; line-height: 1.95; color: var(--text-dark); font-weight: bold; margin-bottom: 24px; }
+.yes-msg {
+  font-size: clamp(.92rem, 3vw, 1.1rem); line-height: 1.9;
+  color: var(--text-dark); font-weight: bold; margin-bottom: 24px;
+}
 
 /* ── Progress Dots ── */
 .progress-dots {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
   display: flex; gap: 10px; z-index: 10;
 }
 .dot {
@@ -422,10 +487,13 @@ body {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -60%) scale(0);
   background: var(--cream); border: 3px solid var(--gold); border-radius: 22px;
-  padding: 26px 34px; text-align: center; z-index: 1000;
+  padding: clamp(18px, 4vw, 26px) clamp(20px, 5vw, 34px);
+  text-align: center; z-index: 1000;
   max-width: 330px; width: 90%;
   box-shadow: 0 20px 60px rgba(0,0,0,.45);
-  font-family: 'Crimson Text', serif; font-size: 1.1rem; color: var(--text-dark);
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(.92rem, 3vw, 1.1rem);
+  color: var(--text-dark);
   line-height: 1.65; transition: all .35s cubic-bezier(.34,1.56,.64,1);
 }
 #cuteAlert.show { transform: translate(-50%, -50%) scale(1); }
@@ -433,78 +501,45 @@ body {
   margin-top: 16px;
   background: linear-gradient(135deg, var(--red-deep), var(--red-mid));
   color: var(--gold-light); border: none; border-radius: 30px; padding: 9px 30px;
-  font-family: 'Crimson Text', serif; font-size: 1rem; cursor: pointer;
-  font-style: italic; transition: transform .2s ease;
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(.86rem, 2.5vw, 1rem);
+  cursor: pointer; font-style: italic; transition: transform .2s ease;
 }
 .alert-close-btn:hover { transform: scale(1.05); }
 
-/* ── Responsive ── */
-@media (max-width: 520px) {
-  .postcard-inner { padding: 28px 14px; }
-  .puzzle-boards { gap: 14px; }
-  .heart-grid { grid-template-columns: repeat(7, 32px); grid-template-rows: repeat(6, 32px); }
-  .hcell { width: 32px; height: 32px; font-size: .85rem; }
-  .envelope-body, .envelope-flap, .env-sides { width: 280px; }
-  .envelope-flap { border-left-width: 140px; border-right-width: 140px; }
-  .env-l { border-left-width: 140px; }
-  .env-r { border-right-width: 140px; }
-  .env-bottom { border-left-width: 140px; border-right-width: 140px; }
-  .confession-title, .yes-title { font-size: 2rem; }
-}
 /* ============================================
-   RESPONSIVE DESIGN (Tablet & Mobile)
+   RESPONSIVE BREAKPOINTS
 ============================================ */
 
-/* Layar Tablet & Laptop Kecil (max-width: 768px) */
-@media (max-width: 768px) {
-  .postcard-inner { padding: 30px 24px; }
-  .puzzle-boards { gap: 20px; flex-direction: column; align-items: center; }
-  .letter-body { font-size: 1rem; line-height: 1.8; }
+/* Very small phones < 360px */
+@media (max-width: 359px) {
+  :root { --cell: 24px; }
+  .postcard-inner { padding: 16px 10px; }
+  .puzzle-boards  { flex-direction: column; align-items: center; }
+  .stamp-area     { top: 10px; right: 6px; }
 }
 
-/* Layar HP Standar (max-width: 520px) */
-@media (max-width: 520px) {
-  /* Skala amplop mengecil otomatis tanpa merusak bentuk */
-  :root { --env-scale: 0.85; }
-
-  .postcard-inner { padding: 24px 16px; }
-  .ribbon { gap: 40px; }
-
-  /* Menyesuaikan ukuran puzzle hati */
-  .heart-grid { grid-template-columns: repeat(7, 32px); grid-template-rows: repeat(6, 32px); gap: 2px; }
-  .hcell { width: 32px; height: 32px; font-size: .85rem; }
-  
-  /* Menyesuaikan ukuran huruf tebakan */
-  .letter-bank { gap: 6px; }
-  .letter-tile { width: 32px; height: 32px; font-size: .85rem; }
-
-  /* Menyesuaikan ukuran teks & tombol */
-  .confession-title, .yes-title { font-size: 2rem; }
-  .big-heart { font-size: 4.5rem; }
-  .btns { flex-direction: column; align-items: center; gap: 12px; }
-  .btn { width: 100%; max-width: 260px; padding: 12px 20px; font-size: 1rem; }
-  
-  .btn-next { 
-    font-size: 1.2rem; 
-    padding: 10px 24px; 
-    white-space: normal; /* Agar teks tombol panjang bisa turun ke bawah */
-    line-height: 1.3;
-    width: 100%;
-  }
-
-  #cuteAlert { padding: 20px; font-size: 1rem; }
+/* Phones 360px–479px */
+@media (max-width: 479px) {
+  /* Stack puzzle boards vertically so each fits on screen */
+  .puzzle-boards  { flex-direction: column; align-items: center; gap: 20px; }
+  .postcard-inner { padding: 20px 14px; }
+  .stamp-area     { top: 14px; right: 10px; }
 }
 
-/* Layar HP Sangat Kecil / iPhone SE (max-width: 380px) */
-@media (max-width: 380px) {
-  :root { --env-scale: 0.7; } /* Amplop mengecil lagi */
+/* Tablets 480px–767px */
+@media (min-width: 480px) and (max-width: 767px) {
+  :root { --cell: clamp(28px, 5vw, 34px); }
+  .postcard-inner { padding: 28px 22px; }
+}
 
-  .heart-grid { grid-template-columns: repeat(7, 28px); grid-template-rows: repeat(6, 28px); }
-  .hcell { width: 28px; height: 28px; font-size: .75rem; border-radius: 4px; }
-  .letter-tile { width: 28px; height: 28px; font-size: .75rem; }
+/* Large tablets / small laptops 768px–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root { --cell: 36px; }
+  .postcard { max-width: 640px; }
+}
 
-  .confession-title, .yes-title { font-size: 1.7rem; }
-  .yes-sub { font-size: 0.85rem; letter-spacing: 1px; }
-  .yes-msg { font-size: 0.95rem; }
-  .letter-salutation { font-size: 1.8rem; }
+/* Desktop ≥ 1024px */
+@media (min-width: 1024px) {
+  :root { --cell: 38px; }
 }
